@@ -1,0 +1,23 @@
+{
+  "fancy-vfx.midnightconfig.title": "Norix Config",
+  "fancy-vfx.midnightconfig.category.visuals": "Visuals",
+  "fancy-vfx.midnightconfig.screenShakeEffects": "Screen Shake",
+  "fancy-vfx.midnightconfig.screenShakeIntensity": "Screen Shake Intensity",
+  "fancy-vfx.midnightconfig.lightningScreenShake": "Lightning Screen Shake",
+  "fancy-vfx.midnightconfig.explosionScreenShake": "Explosion Screen Shake",
+  "fancy-vfx.midnightconfig.improvedEffects": "Improvements",
+  "fancy-vfx.midnightconfig.improvedExplosions": "Improved Explosions",
+  "fancy-vfx.midnightconfig.improvedLightning": "Improved Lightning",
+  "fancy-vfx.midnightconfig.statusEffectVFX": "Status Effect VFX",
+  "fancy-vfx.midnightconfig.projectileCollision": "Projectile Collision VFX",
+  "fancy-vfx.midnightconfig.damageVFX": "Damage VFX",
+  "fancy-vfx.midnightconfig.expTrail": "Experience Orb Trail",
+  "fancy-vfx.midnightconfig.improvedBow": "Improved Bow",
+  "fancy-vfx.midnightconfig.smokeFromSprinting": "Smoke From Sprinting",
+  "fancy-vfx.midnightconfig.lightAura": "Light Aura",
+  "fancy-vfx.midnightconfig.connectingLightAura": "Connecting Light Aura",
+  "fancy-vfx.midnightconfig.maxConnectingLightAura": "Maximum Connecting Light Aura",
+  "fancy-vfx.midnightconfig.smokeFromLightnings": "Smoke From Lightning",
+  "fancy-vfx.midnightconfig.smokeFromExplosions": "Smoke From Explosions",
+  "fancy-vfx.midnightconfig.underWaterExplosions": "Underwater Explosions"
+}

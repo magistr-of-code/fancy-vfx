@@ -1,0 +1,34 @@
+{
+	"schemaVersion": 1,
+	"id": "fancy-vfx",
+	"version": "${version}",
+	"name": "Fancy VFX",
+	"description": "This mod adds new fancy effects to minecraft like Better Explosions, Better Lightnings, Experience Orbs Trails, Shooting vfx and etc.",
+	"authors": [
+		"maxmag_change aka Max"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/fancy-vfx/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"client": [
+			"maxmag_change.fancyvfx.FancyVFX"
+		]
+	},
+	"mixins": [
+		"fancy-vfx.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~1.20.1",
+		"java": ">=17",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}

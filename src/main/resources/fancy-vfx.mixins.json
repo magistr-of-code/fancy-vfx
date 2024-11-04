@@ -1,0 +1,21 @@
+{
+	"required": true,
+	"package": "maxmag_change.fancyvfx.mixin",
+	"compatibilityLevel": "JAVA_17",
+	"mixins": [
+		"BowItemMixin",
+		"ItemMixin"
+	],
+	"client": [
+		"LivingEntityStatusEffectsMixin",
+		"EntitySprintingParticlesMixin",
+		"ExperienceOrbEntityRendererMixin",
+		"ExperienceOrbPositionTracker",
+		"ExplosionMixin",
+		"LightningEffectsImpl",
+		"ProjectileCollisionMixin"
+	],
+	"injectors": {
+		"defaultRequire": 1
+	}
+}
