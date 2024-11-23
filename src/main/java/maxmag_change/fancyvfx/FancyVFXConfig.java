@@ -25,13 +25,15 @@ public class FancyVFXConfig extends MidnightConfig {
     @Entry(category = visuals)
     public static boolean smokeFromLightnings = true;
     @Entry(category = visuals)
-    public static boolean lightAura = true;
+    public static boolean lightAura = false;
     @Entry(category = visuals)
     public static boolean connectingLightAura = true;
     @Entry(category = visuals, min = 0, max = 40, isSlider = true)
     public static int maxConnectingLightAura = 3;
     @Entry(category = visuals)
     public static boolean smokeFromSprinting = true;
+    @Entry(category = visuals, min = 0,max = 2, isSlider = true)
+    public static float smokeFromSprintingSizeMultiplier = 1;
     @Entry(category = visuals)
     public static boolean improvedBow = true;
     @Entry(category = visuals)

@@ -2,9 +2,11 @@ package maxmag_change.fancyvfx.event;
 
 import maxmag_change.fancyvfx.FancyVFXConfig;
 import maxmag_change.fancyvfx.particles.FancyVFXParticleRegistry;
+import maxmag_change.fancyvfx.util.MathHelper;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderContext;
 import net.fabricmc.fabric.api.client.rendering.v1.WorldRenderEvents;
 import net.minecraft.block.BlockState;
+import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.world.ClientWorld;
 import net.minecraft.util.Pair;
 import net.minecraft.util.math.BlockPos;
@@ -58,12 +60,20 @@ public class WorldRenderHandler implements WorldRenderEvents.Start{
         return new Pair<>(lightGroup,steps);
     }
 
+    int renderTick = 0;
+
     @Override
     public void onStart(WorldRenderContext context) {
 
         ClientWorld world = context.world();
 
-        if (world!=null&&context.frustum()!=null&& FancyVFXConfig.lightAura) {
+        if (renderTick>=360){
+            renderTick=0;
+        } else {
+            renderTick++;
+        }
+
+        if (world!=null&&context.frustum()!=null&& FancyVFXConfig.lightAura && MinecraftClient.getInstance().player!=null) {
 
             int ChunkRadius = 3;
 
@@ -126,17 +136,23 @@ public class WorldRenderHandler implements WorldRenderEvents.Start{
                     }
 
                     lightGroups.forEach(lightGroup->{
-                        if (context.frustum().isVisible(lightGroup)) {
+
+                        int pointsIntensity = MathHelper.pointsSeen(MinecraftClient.getInstance().player,lightGroup.expand(0.5));
+
+                        if (context.frustum().isVisible(lightGroup)&& pointsIntensity>=1) {
+
+                            Vec3d toLightSource = lightGroup.getCenter().subtract(MinecraftClient.getInstance().player.getPos()).normalize();
+                            double lookIntensity = toLightSource.dotProduct(MinecraftClient.getInstance().player.getRotationVecClient());
 
                             Vec3d pos = lightGroup.getCenter();
 
                             float size = (float) new Vec3d(lightGroup.maxX, lightGroup.maxY, lightGroup.maxZ).distanceTo(new Vec3d(lightGroup.minX, lightGroup.minY, lightGroup.minZ));
 
                             WorldParticleBuilder.create(FancyVFXParticleRegistry.RING_PARTICLE)
-                                    .setScaleData(GenericParticleData.create(size).build())
-                                    .setTransparencyData(GenericParticleData.create(0.01f*world.getLightLevel(BlockPos.ofFloored(pos))).build())
+                                    .setScaleData(GenericParticleData.create((float) (size*pointsIntensity/8*lookIntensity)).build())
+                                    .setTransparencyData(GenericParticleData.create((float) (0.015f*world.getLightLevel(BlockPos.ofFloored(pos))*lookIntensity*pointsIntensity/8)).build())
                                     .setColorData(ColorParticleData.create(new Color(232, 195, 60)).build())
-                                    .setSpinData(SpinParticleData.create(0.2f, 0.4f).setSpinOffset((world.getTime() * 0.2f) % 6.28f).setEasing(Easing.QUARTIC_IN).build())
+                                    .setSpinData(SpinParticleData.create(0.2f, 0.4f).setSpinOffset((world.getTime() * 0.05f)).setEasing(Easing.CIRC_OUT).build())
                                     .setLifetime(1)
                                     .setFullBrightLighting()
                                     .addRenderActor(new Consumer<LodestoneWorldParticle>() {

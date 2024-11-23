@@ -38,6 +38,7 @@ public class EntitySprintingParticlesMixin {
 
             Random random = Random.create();
 
+            float sizeMultiplier = FancyVFXConfig.smokeFromSprintingSizeMultiplier;
 
             BlockPos blockPos = entity.getLandingPos();
             BlockState blockState = entity.getWorld().getBlockState(blockPos);
@@ -55,11 +56,11 @@ public class EntitySprintingParticlesMixin {
                 }
 
                 WorldParticleBuilder.create(FancyVFXParticleRegistry.SMOKE_PARTICLE)
-                        .setScaleData(GenericParticleData.create(0.5f,0.7f,0.4f).setEasing(Easing.CUBIC_IN,Easing.BOUNCE_OUT).setCoefficient(3f).build())
+                        .setScaleData(GenericParticleData.create(0.5f*sizeMultiplier,0.7f*sizeMultiplier,0.4f*sizeMultiplier).setEasing(Easing.CUBIC_IN,Easing.BOUNCE_OUT).setCoefficient(3f).build())
                         .setTransparencyData(GenericParticleData.create(0.8f, 0.5f).build())
                         .setNaturalLighting()
                         .setColorData(ColorParticleData.create(new Color(255, 253, 253,255).darker(), new Color(136, 136, 136, 255).darker()).setEasing(Easing.BOUNCE_IN_OUT).build())
-                        .setLifetime(42)
+                        .setLifetime(29)
                         .setRandomOffset(0.5,0.1,0.5)
                         .setRenderType(LodestoneWorldParticleRenderType.TRANSPARENT)
                         .setMotion(vec3d.x * -0.5, 0.15, vec3d.z * -0.5)
