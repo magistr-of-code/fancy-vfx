@@ -50,43 +50,46 @@ public abstract class ExplosionMixin {
 
     @Inject(method = "affectWorld(Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;addParticle(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V"), cancellable = true)
     public void norix$spawnExplosiveParticles(boolean particles, CallbackInfo ci) {
+
+        float genericPower = Math.round(power);
+
         if (explosionScreenShake == null && FancyVFXConfig.explosionScreenShake) {
-            explosionScreenShake = new PositionedScreenshakeInstance(30, new Vec3d(x,y,z).add(0,1,0), 10f, 20f*power, Easing.CIRC_IN_OUT).setIntensity(0f,FancyVFXConfig.screenShakeIntensity*power,0f);
+            explosionScreenShake = new PositionedScreenshakeInstance(30, new Vec3d(x,y,z).add(0,1,0), 10f, 20f* genericPower, Easing.CIRC_IN_OUT).setIntensity(0f,FancyVFXConfig.screenShakeIntensity* genericPower,0f);
             ScreenshakeHandler.addScreenshake(explosionScreenShake);
         }
         if (particles && FancyVFXConfig.improvedExplosions) {
 
             ParticlesImpl.GenericExpandingRingParticle
-                    .setScaleData(GenericParticleData.create(1f,10f*power).setEasing(Easing.CUBIC_IN).setCoefficient(3f).build())
+                    .setScaleData(GenericParticleData.create(1f,10f* genericPower).setEasing(Easing.CUBIC_IN).setCoefficient(3f).build())
                     .setColorData(ColorParticleData.create(new Color(255, 74, 58), new Color(255, 255, 255)).setEasing(Easing.BOUNCE_IN_OUT).build())
                     .spawn(world, x, y, z);
 
             ParticlesImpl.GenericExpandingRingParticle
                     .setBehavior(new DirectionalBehaviorComponent(new Vec3d(0,-1,0)))
-                    .setScaleData(GenericParticleData.create(1f,10f*power).setEasing(Easing.CUBIC_IN).setCoefficient(3f).build())
+                    .setScaleData(GenericParticleData.create(1f,10f* genericPower).setEasing(Easing.CUBIC_IN).setCoefficient(3f).build())
                     .setColorData(ColorParticleData.create(new Color(255, 74, 58), new Color(255, 255, 255)).setEasing(Easing.BOUNCE_IN_OUT).build())
                     .spawn(world, x, y, z);
 
             if (world.getFluidState(BlockPos.ofFloored(x,y,z)).isIn(FluidTags.WATER)){
                 if (FancyVFXConfig.underWaterExplosions) {
-                    for (int i = 0; i != 15*power; i++) {
+                    for (int i = 0; i != 15* genericPower; i++) {
                         WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE)
-                                .setScaleData(GenericParticleData.create(2f*power+Random.create().nextBetween(-1,1), 0).build())
+                                .setScaleData(GenericParticleData.create(2f* genericPower +Random.create().nextBetween(-1,1), 0).build())
                                 .setTransparencyData(GenericParticleData.create(0.75f, 0f).build())
                                 .setColorData(ColorParticleData.create(new Color(255, 99, 0), new Color(255, 178, 3, 255)).setCoefficient(1.4f).setEasing(Easing.BOUNCE_IN_OUT).build())
                                 .setFullBrightLighting()
                                 .setSpinData(SpinParticleData.create(0.2f, 0.4f).setSpinOffset((world.getTime() * 0.2f) % 6.28f).setEasing(Easing.QUARTIC_IN).build())
                                 .setLifetime(25)
                                 .setRandomOffset(0.3)
-                                .setRandomMotion(0.05*power)
+                                .setRandomMotion(0.05* genericPower)
                                 .disableNoClip()
                                 .enableForcedSpawn()
                                 .spawn(world, x, y, z);
 
                         if (FancyVFXConfig.smokeFromExplosions) {
                             ParticlesImpl.GenericSmokeParticle
-                                    .setScaleData(GenericParticleData.create(3f*power,2f*power).build())
-                                    .setRandomOffset(1.5*power)
+                                    .setScaleData(GenericParticleData.create(3f* genericPower,2f* genericPower).build())
+                                    .setRandomOffset(1.5* genericPower)
                                     .setLifetime(35)
                                     .spawn(world, x, y, z);
                         }
@@ -101,14 +104,14 @@ public abstract class ExplosionMixin {
                             z,
                             FancyVFXSounds.WATER_SURFACE_EXPLOSION,
                             SoundCategory.AMBIENT,
-                            (power*2-yi) * 10f,
+                            (genericPower *2-yi) * 10f,
                             0.8f,
                             true
                     );
 
                     if (FabricLoader.getInstance().isModLoaded("effective")) try{
-                        if (yi<power*2){
-                            EffectiveCreateSplash.create(world,power*2-yi, power*2-yi,x,y+yi,z);
+                        if (yi< genericPower *2){
+                            EffectiveCreateSplash.create(world, genericPower *2-yi, genericPower *2-yi,x,y+yi,z);
                         }
                     } catch (LinkageError error) {
                         FancyVFX.LOGGER.error("Failed to setup effective integration. Underwater explosions will look boring.", error);
@@ -118,7 +121,7 @@ public abstract class ExplosionMixin {
                     }
                 }
             } else {
-                for (int i = 0; i != 15*power; i++) {
+                for (int i = 0; i != 15* genericPower; i++) {
 
                     float fl = world.getRandom().nextFloat();
 
@@ -138,33 +141,33 @@ public abstract class ExplosionMixin {
                                 .spawn(world, x,y,z);
 
                         ParticlesImpl.GenericSmokeParticle
-                                .setScaleData(GenericParticleData.create(4f*power,2f*power).build())
-                                .setRandomOffset(2*power)
+                                .setScaleData(GenericParticleData.create(4f* genericPower,2f* genericPower).build())
+                                .setRandomOffset(2* genericPower)
                                 //.multiplyLifetime(fl!=0 ? fl : 1)
                                 .spawn(world, x, y, z);
                     }
 
                     //adding blast 😍
                     WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE)
-                            .setScaleData(GenericParticleData.create(2f*power+Random.create().nextBetween(-1,1), 0).build())
+                            .setScaleData(GenericParticleData.create(2f* genericPower +Random.create().nextBetween(-1,1), 0).build())
                             .setTransparencyData(GenericParticleData.create(0.75f, 0f).build())
                             .setColorData(ColorParticleData.create(new Color(255, 99, 0), new Color(255, 178, 3, 255)).setCoefficient(1.4f).setEasing(Easing.BOUNCE_IN_OUT).build())
                             .setFullBrightLighting()
                             .setSpinData(SpinParticleData.create(0.2f, 0.4f).setSpinOffset((world.getTime() * 0.2f) % 6.28f).setEasing(Easing.QUARTIC_IN).build())
                             .setLifetime(25)
                             .setRandomOffset(0.3)
-                            .setRandomMotion(0.2*power)
+                            .setRandomMotion(0.2* genericPower)
                             .disableNoClip()
                             .enableForcedSpawn()
                             .spawn(world, x, y, z);
                     WorldParticleBuilder.create(LodestoneParticleRegistry.WISP_PARTICLE)
-                            .setScaleData(GenericParticleData.create(1.2f*power+Random.create().nextBetween(-1,1), 0).build())
+                            .setScaleData(GenericParticleData.create(1.2f* genericPower +Random.create().nextBetween(-1,1), 0).build())
                             .setTransparencyData(GenericParticleData.create(0.75f, 0f).build())
                             .setColorData(ColorParticleData.create(new Color(255, 95, 49), new Color(129, 52, 0, 255)).setCoefficient(1.4f).setEasing(Easing.BOUNCE_IN_OUT).build())
                             .setSpinData(SpinParticleData.create(0.2f, 0.4f).setSpinOffset((world.getTime() * 0.2f) % 6.28f).setEasing(Easing.QUARTIC_IN).build())
                             .setLifetime(25)
                             .setRandomOffset(0.3)
-                            .setRandomMotion(0.7*power)
+                            .setRandomMotion(0.7* genericPower)
                             .disableNoClip()
                             .spawn(world, x, y, z);
                 }
