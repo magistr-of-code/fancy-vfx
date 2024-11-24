@@ -1,0 +1,15 @@
+Dependencies for Modrinth
+
+Required
+
+Fabric API - P7dR8mSH
+
+Optional
+
+Effective - pcPXJeZi
+
+Embedded
+
+Cardinal Components API - K01OU20C
+Lodestone - bN3xUWdo
+Midnight Lib - codAaoxh
