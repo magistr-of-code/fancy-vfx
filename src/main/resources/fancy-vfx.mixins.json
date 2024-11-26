@@ -2,7 +2,7 @@
   "required": true,
   "package": "maxmag_change.fancyvfx.mixin",
   "compatibilityLevel": "JAVA_17",
-  "mixins": [
+  "client": [
     "AbstractHorseEntityMixin",
     "BowItemMixin",
     "ItemMixin",
@@ -16,5 +16,5 @@
   ],
   "injectors": {
     "defaultRequire": 1
-	}
+  }
 }

@@ -17,6 +17,8 @@ public class FancyVFXConfig extends MidnightConfig {
     @Entry(category = visuals)
     public static boolean improvedExplosions = true;
     @Entry(category = visuals)
+    public static float explosionMultiplier = 1F;
+    @Entry(category = visuals)
     public static boolean underWaterExplosions = true;
     @Entry(category = visuals)
     public static boolean smokeFromExplosions = true;

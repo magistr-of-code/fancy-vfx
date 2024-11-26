@@ -51,7 +51,7 @@ public abstract class ExplosionMixin {
     @Inject(method = "affectWorld(Z)V", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/World;addParticle(Lnet/minecraft/particle/ParticleEffect;DDDDDD)V"), cancellable = true)
     public void norix$spawnExplosiveParticles(boolean particles, CallbackInfo ci) {
 
-        float genericPower = Math.round(power);
+        float genericPower = Math.round(power * FancyVFXConfig.explosionMultiplier);
 
         if (explosionScreenShake == null && FancyVFXConfig.explosionScreenShake) {
             explosionScreenShake = new PositionedScreenshakeInstance(30, new Vec3d(x,y,z).add(0,1,0), 10f, 20f* genericPower, Easing.CIRC_IN_OUT).setIntensity(0f,FancyVFXConfig.screenShakeIntensity* genericPower,0f);
