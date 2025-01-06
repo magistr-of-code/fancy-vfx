@@ -21,29 +21,41 @@ public class FancyVFXConfig extends MidnightConfig {
     @Entry(category = visuals)
     public static boolean underWaterExplosions = true;
     @Entry(category = visuals)
-    public static boolean smokeFromExplosions = true;
-    @Entry(category = visuals)
     public static boolean improvedLightning = true;
     @Entry(category = visuals)
-    public static boolean smokeFromLightnings = true;
-    @Entry(category = visuals)
-    public static boolean lightAura = false;
-    @Entry(category = visuals)
-    public static boolean connectingLightAura = true;
-    @Entry(category = visuals, min = 0, max = 40, isSlider = true)
-    public static int maxConnectingLightAura = 3;
-    @Entry(category = visuals)
-    public static boolean smokeFromSprinting = true;
-    @Entry(category = visuals, min = 0,max = 2, isSlider = true)
-    public static float smokeFromSprintingSizeMultiplier = 1;
-    @Entry(category = visuals)
-    public static boolean improvedBow = true;
-    @Entry(category = visuals)
-    public static boolean expTrail = true;
+    public static BowOptions improvedBow = BowOptions.ENABLE;
     @Entry(category = visuals)
     public static boolean damageVFX = true;
     @Entry(category = visuals)
     public static boolean projectileCollision = true;
     @Entry(category = visuals)
     public static boolean statusEffectVFX = true;
+
+    @Comment(category = visuals, centered = true) public static Comment lightAuraC;
+    @Entry(category = visuals)
+    public static boolean lightAura = false;
+    @Entry(category = visuals)
+    public static boolean connectingLightAura = true;
+    @Entry(category = visuals, min = 0, max = 40, isSlider = true)
+    public static int maxConnectingLightAura = 3;
+
+    @Comment(category = visuals, centered = true) public static Comment trails;
+    @Entry(category = visuals)
+    public static boolean expTrail = true;
+    @Entry(category = visuals)
+    public static boolean arrowTrail = true;
+
+    @Comment(category = visuals, centered = true) public static Comment smoke;
+    @Entry(category = visuals)
+    public static boolean smokeFromLightnings = true;
+    @Entry(category = visuals)
+    public static boolean smokeFromExplosions = true;
+    @Entry(category = visuals)
+    public static boolean smokeFromSprinting = true;
+    @Entry(category = visuals, min = 0,max = 2, isSlider = true)
+    public static float smokeFromSprintingSizeMultiplier = 1;
+
+    public enum BowOptions {
+        ENABLE, WHEN_FIRED, DISABLE
+    }
 }

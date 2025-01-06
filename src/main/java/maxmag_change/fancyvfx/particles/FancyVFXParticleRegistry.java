@@ -13,16 +13,18 @@ public class FancyVFXParticleRegistry {
 
 
     public static final RegistryObject<LodestoneWorldParticleType> RING_PARTICLE = PARTICLES.register("ring", LodestoneWorldParticleType::new);
-    public static final RegistryObject<LodestoneWorldParticleType> AURA_PARTICLE = PARTICLES.register("aura", LodestoneWorldParticleType::new);
-    public static final RegistryObject<LodestoneWorldParticleType> PIXEL_PARTICLE = PARTICLES.register("pixel", LodestoneWorldParticleType::new);
-    public static final RegistryObject<LodestoneWorldParticleType> SMOKE_PARTICLE = PARTICLES.register("smoke", SmokeParticleType::new);
+    public static final RegistryObject<LitLodestoneParticleType> AURA_PARTICLE = PARTICLES.register("aura", LitLodestoneParticleType::new);
+    public static final RegistryObject<LitLodestoneParticleType> PIXEL_PARTICLE = PARTICLES.register("pixel", LitLodestoneParticleType::new);
+    public static final RegistryObject<SmokeParticleType> SMOKE_PARTICLE = PARTICLES.register("smoke", SmokeParticleType::new);
 
     public static void register(){
         PARTICLES.register();
 
+        FancyVFX.LOGGER.info("Registering Particles for " + FancyVFX.MOD_ID);
+
         ParticleFactoryRegistry.getInstance().register(RING_PARTICLE.get(), LodestoneWorldParticleType.Factory::new);
-        ParticleFactoryRegistry.getInstance().register(PIXEL_PARTICLE.get(), LodestoneWorldParticleType.Factory::new);
-        ParticleFactoryRegistry.getInstance().register(AURA_PARTICLE.get(), LodestoneWorldParticleType.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(PIXEL_PARTICLE.get(), LitLodestoneParticleType.Factory::new);
+        ParticleFactoryRegistry.getInstance().register(AURA_PARTICLE.get(), LitLodestoneParticleType.Factory::new);
         ParticleFactoryRegistry.getInstance().register(SMOKE_PARTICLE.get(), SmokeParticleType.Factory::new);
     }
 }

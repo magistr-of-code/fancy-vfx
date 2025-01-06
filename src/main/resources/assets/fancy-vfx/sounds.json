@@ -1,0 +1,6 @@
+{
+  "waterblast": {
+    "subtitle": "fancy-vfx.waterblast",
+    "sounds": ["fancy-vfx:waterblast_1","fancy-vfx:waterblast_2","fancy-vfx:waterblast_3"]
+  }
+}

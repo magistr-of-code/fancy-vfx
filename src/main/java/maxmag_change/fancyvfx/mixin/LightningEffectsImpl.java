@@ -12,6 +12,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.util.math.random.Random;
 import net.minecraft.world.World;
 import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
@@ -22,6 +23,7 @@ import team.lodestar.lodestone.systems.particle.builder.WorldParticleBuilder;
 import team.lodestar.lodestone.systems.particle.data.GenericParticleData;
 import team.lodestar.lodestone.systems.particle.data.color.ColorParticleData;
 import team.lodestar.lodestone.systems.particle.data.spin.SpinParticleData;
+import team.lodestar.lodestone.systems.particle.render_types.LodestoneWorldParticleRenderType;
 import team.lodestar.lodestone.systems.screenshake.PositionedScreenshakeInstance;
 import team.lodestar.lodestone.systems.screenshake.ScreenshakeInstance;
 
@@ -30,6 +32,25 @@ import java.awt.*;
 @Environment(EnvType.CLIENT)
 @Mixin(LightningEntity.class)
 public abstract class LightningEffectsImpl extends Entity{
+
+    @Unique
+    WorldParticleBuilder GenericSmokeParticle() {
+        Random random = Random.create();
+
+        int dark = random.nextBetween(0,20);
+        int dark1 = random.nextBetween(0,20);
+
+        return WorldParticleBuilder.create(FancyVFXParticleRegistry.SMOKE_PARTICLE)
+                .setScaleData(GenericParticleData.create(3f, 1.5f).build())
+                .setTransparencyData(GenericParticleData.create(0.2f, 0f).build())
+                .setNaturalLighting()
+                .setColorData(ColorParticleData.create(new Color(96-dark1, 96-dark1, 96-dark1, 255).darker(), new Color(147-dark, 147-dark, 147-dark, 255).darker()).setEasing(Easing.BOUNCE_IN_OUT).build())
+                .setLifetime(168)
+                .setRenderType(LodestoneWorldParticleRenderType.TRANSPARENT.withDepthFade())
+                .setRandomOffset(1)
+                .setGravityStrength(0.05f)
+                .disableNoClip();
+    }
 
     public ScreenshakeInstance lightningScreenShake;
 
@@ -72,7 +93,7 @@ public abstract class LightningEffectsImpl extends Entity{
                 //adding smoke
 
                 if (FancyVFXConfig.smokeFromLightnings) {
-                    ParticlesImpl.GenericSmokeParticle
+                    GenericSmokeParticle()
                             .spawn(world, pos.getX(), pos.getY(), pos.getZ());
                 }
 

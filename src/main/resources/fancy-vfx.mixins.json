@@ -4,17 +4,22 @@
   "compatibilityLevel": "JAVA_17",
   "client": [
     "AbstractHorseEntityMixin",
+    "ArrowEntityRendererMixin",
     "BowItemMixin",
-    "ItemMixin",
     "EntitySprintingParticlesMixin",
     "ExperienceOrbEntityRendererMixin",
     "ExperienceOrbPositionTracker",
     "ExplosionMixin",
+    "ItemMixin",
     "LightningEffectsImpl",
     "LivingEntityStatusEffectsMixin",
     "ProjectileCollisionMixin"
   ],
   "injectors": {
     "defaultRequire": 1
-  }
+  },
+  "mixins": [
+    "ArrowEntityPositionTracker",
+    "CrossbowItemMixin"
+  ]
 }
