@@ -12,6 +12,7 @@ import net.fabricmc.loader.api.FabricLoader;
 import net.minecraft.client.MinecraftClient;
 import net.minecraft.client.particle.ParticleTextureSheet;
 import net.minecraft.client.sound.PositionedSoundInstance;
+import net.minecraft.client.sound.RepeatingAudioStream;
 import net.minecraft.client.sound.SoundInstance;
 import net.minecraft.registry.tag.FluidTags;
 import net.minecraft.sound.SoundCategory;
