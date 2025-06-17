@@ -53,7 +53,7 @@ public class BowItemMixin {
         if (FancyVFXConfig.improvedBow == FancyVFXConfig.BowOptions.ENABLE) {
             Vec3d pos = new Vec3d(user.getX(), user.getEyeY() - (double)0.1f, user.getZ());
 
-            for (int i = 0; i<=10; i++) {
+            for (int i = 0; i<=8; i++) {
                 Vec3d spawnPos = pos.add((double) Random.create().nextBetween(-100, 100) /200, (double) Random.create().nextBetween(-100, 100) /200, (double) Random.create().nextBetween(-100, 100) /200);
 
                 Vec3d motion = pos.subtract(spawnPos);

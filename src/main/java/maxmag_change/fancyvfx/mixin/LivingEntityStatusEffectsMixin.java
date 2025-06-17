@@ -26,7 +26,7 @@ import java.awt.*;
 public class LivingEntityStatusEffectsMixin {
     @Inject(method = "onStatusEffectApplied(Lnet/minecraft/entity/effect/StatusEffectInstance;Lnet/minecraft/entity/Entity;)V",at = @At("HEAD"))
     protected void onStatusEffectApplied(StatusEffectInstance effect, Entity source, CallbackInfo ci) {
-        if (FancyVFXConfig.statusEffectVFX) {
+        if (FancyVFXConfig.statusEffectVFX && effect.shouldShowParticles()) {
             LivingEntity entity = ((LivingEntity) (Object) this);
 
             Vec3d direction;
@@ -51,7 +51,7 @@ public class LivingEntityStatusEffectsMixin {
             float startG = (float)((startColor >> 8 & 0xFF)) / 255.0f;
             float startB = (float)((startColor & 0xFF)) / 255.0f;
 
-            WorldParticleBuilder.create(FancyVFXParticleRegistry.RING_PARTICLE)
+            WorldParticleBuilder particle1 = WorldParticleBuilder.create(FancyVFXParticleRegistry.RING_PARTICLE)
                     .setScaleData(GenericParticleData.create(1).build())
                     .setTransparencyData(GenericParticleData.create(1f, 0f).build())
                     .setFullBrightLighting()
@@ -59,11 +59,9 @@ public class LivingEntityStatusEffectsMixin {
                     .setLifetime(10)
                     .setBehavior(new DirectionalBehaviorComponent(direction))
                     .setMotion(direction.multiply(0.5))
-                    .disableNoClip()
-                    .setColorData(ColorParticleData.create(new Color(startR,startG,startB), new Color(44, 109, 193)).setCoefficient(1.4f).setEasing(Easing.BOUNCE_IN_OUT).build())
-                    .spawn(entity.getWorld(),pos.getX(),pos.getY(),pos.getZ());
+                    .disableNoClip();
 
-            WorldParticleBuilder.create(FancyVFXParticleRegistry.RING_PARTICLE)
+            WorldParticleBuilder particle2 = WorldParticleBuilder.create(FancyVFXParticleRegistry.RING_PARTICLE)
                     .setScaleData(GenericParticleData.create(1).build())
                     .setTransparencyData(GenericParticleData.create(1f, 0f).build())
                     .setFullBrightLighting()
@@ -71,11 +69,9 @@ public class LivingEntityStatusEffectsMixin {
                     .setLifetime(12)
                     .setBehavior(new DirectionalBehaviorComponent(direction))
                     .setMotion(direction.multiply(0.25))
-                    .disableNoClip()
-                    .setColorData(ColorParticleData.create(new Color(startR,startG,startB), new Color(44, 109, 193)).setCoefficient(1.4f).setEasing(Easing.BOUNCE_IN_OUT).build())
-                    .spawn(entity.getWorld(),pos.getX(),pos.getY(),pos.getZ());
+                    .disableNoClip();
 
-            WorldParticleBuilder.create(FancyVFXParticleRegistry.RING_PARTICLE)
+            WorldParticleBuilder particle3 = WorldParticleBuilder.create(FancyVFXParticleRegistry.RING_PARTICLE)
                     .setScaleData(GenericParticleData.create(1).build())
                     .setTransparencyData(GenericParticleData.create(1f, 0f).build())
                     .setFullBrightLighting()
@@ -86,6 +82,28 @@ public class LivingEntityStatusEffectsMixin {
                     .disableNoClip()
                     .setColorData(ColorParticleData.create(new Color(startR,startG,startB), new Color(44, 109, 193)).setCoefficient(1.4f).setEasing(Easing.BOUNCE_IN_OUT).build())
                     .spawn(entity.getWorld(),pos.getX(),pos.getY(),pos.getZ());
+
+            if(effect.getEffectType().isBeneficial()){
+                particle1
+                        .setColorData(ColorParticleData.create(new Color(startR,startG,startB), new Color(44, 109, 193)).setCoefficient(1.4f).setEasing(Easing.BOUNCE_IN_OUT).build())
+                        .spawn(entity.getWorld(),pos.getX(),pos.getY(),pos.getZ());
+                particle2
+                        .setColorData(ColorParticleData.create(new Color(startR,startG,startB), new Color(44, 109, 193)).setCoefficient(1.4f).setEasing(Easing.BOUNCE_IN_OUT).build())
+                        .spawn(entity.getWorld(),pos.getX(),pos.getY(),pos.getZ());
+                particle3
+                        .setColorData(ColorParticleData.create(new Color(startR,startG,startB), new Color(44, 109, 193)).setCoefficient(1.4f).setEasing(Easing.BOUNCE_IN_OUT).build())
+                        .spawn(entity.getWorld(),pos.getX(),pos.getY(),pos.getZ());
+            } else {
+                particle1
+                        .setColorData(ColorParticleData.create(new Color(startR,startG,startB), new Color(193, 44, 44)).setCoefficient(1.4f).setEasing(Easing.BOUNCE_IN_OUT).build())
+                        .spawn(entity.getWorld(),pos.getX(),pos.getY(),pos.getZ());
+                particle2
+                        .setColorData(ColorParticleData.create(new Color(startR,startG,startB), new Color(193, 44, 44)).setCoefficient(1.4f).setEasing(Easing.BOUNCE_IN_OUT).build())
+                        .spawn(entity.getWorld(),pos.getX(),pos.getY(),pos.getZ());
+                particle3
+                        .setColorData(ColorParticleData.create(new Color(startR,startG,startB), new Color(193, 44, 44)).setCoefficient(1.4f).setEasing(Easing.BOUNCE_IN_OUT).build())
+                        .spawn(entity.getWorld(),pos.getX(),pos.getY(),pos.getZ());
+            }
         }
     }
 }

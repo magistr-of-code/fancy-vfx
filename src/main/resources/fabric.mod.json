@@ -8,12 +8,12 @@
 		"maxmag_change aka Max"
 	],
 	"contact": {
-		"homepage": "https://fabricmc.net/",
-		"sources": "https://github.com/FabricMC/fabric-example-mod"
+		"homepage": "https://modrinth.com/mod/fancy-vfx",
+		"sources": "https://github.com/magistr-of-code/fancy-vfx"
 	},
 	"license": "ARR",
 	"icon": "assets/fancy-vfx/icon.png",
-	"environment": "*",
+	"environment": "client",
 	"entrypoints": {
 		"client": [
 			"maxmag_change.fancyvfx.FancyVFX"
@@ -29,6 +29,6 @@
 		"fabric-api": "*"
 	},
 	"suggests": {
-		"another-mod": "*"
+		"another-mod": "Enchanted Warfare"
 	}
 }
